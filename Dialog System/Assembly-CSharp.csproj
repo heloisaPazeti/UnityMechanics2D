@@ -57,9 +57,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\DialogManager.cs" />
-    <Compile Include="Assets\Scripts\DialogTrigger.cs" />
     <Compile Include="Assets\Scripts\Actor.cs" />
     <Compile Include="Assets\Scripts\DialogInsert.cs" />
+    <Compile Include="Assets\Scripts\DialogTrigger.cs" />
+    <Compile Include="Assets\Scripts\SimpleInteraction.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

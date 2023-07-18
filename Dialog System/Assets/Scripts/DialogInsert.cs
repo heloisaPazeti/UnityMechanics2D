@@ -5,8 +5,9 @@ using UnityEngine;
 /// <summary>
 /// Class that holds the dialog block to be displayed 
 /// </summary>
+
 [System.Serializable]
-public class DialogInsert : MonoBehaviour
+public class DialogInsert
 {
     public Actor actor;
     public string baseActorName;
