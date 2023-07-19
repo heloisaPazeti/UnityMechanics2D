@@ -3,7 +3,7 @@
 This Unity project contains a prototype dialog system. When starting an interaction a dialog box appears and the written texts
 are shown in the order expected in that box.
 
-The box consists of an image (speaking character avatar), which is not required. The character's name and the content of the dialogue.
+The box consists of an image, which is not required. The character's name and the content of the dialogue.
 
 Clicking on the dialog box moves on to the next text. When the full dialog ends, the box disappears and can be triggered again.
 
