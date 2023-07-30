@@ -19,7 +19,7 @@ Set of movements and animations (with Blend Tree) common in platform style games
 
 Um sistema simples que mostra uma sequência de diálogos determinadas na próprio Editor da Unity.
 
-### Sistema de Diállogo Com Escolhas
+### Sistema de Diálogo Com Escolhas
 
 Um sistema de diálogo utilizando INK e Json que introduz a possibilidade de escolhas diferentes e árvores de diálogos mais complexas.
 
