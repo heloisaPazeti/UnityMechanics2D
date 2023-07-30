@@ -92,3 +92,9 @@ Clicando na caixa de diálogo, passa-se ao próximo texto. Quando o diálogo com
 ### Simple Interaction
 
 - Exemplo de uma interação. Herda de Dialog Trigger, podendo ter ações diferentes das básicas.
+
+##
+
+### <p align="center">References / Referências</p>
+
+<p align="center"><a href="https://www.youtube.com/watch?v=_nRzoTzeyxU&t=311s&pp=ygUTZGlhbG9nIHN5c3RlbSB1bml0eQ%3D%3D">Youtube Base Tutorial</a></p>
