@@ -2,9 +2,29 @@
 
 Set of simple movement mechanics and animations in a 2D platformer style.
 
+### Contains
+
+- Horizontal movement;
+- Vertical Movement;
+- Sliding on the walls;
+- Double jump;
+- Dash (impulse in the direction of movement);
+- Animation for all movements using Blend Tree;
+
+##
+
 # Sistema de Movimento em Plataformas
 
 Conjunto de mecânicas de movimento e animações simples no estilo plataforma 2D.
+
+### Contém
+
+- Movimentação Horizontal;
+- Movimentação Vertical;
+- Escorregar pelas paredes;
+- Pulo duplo;
+- Dash (impulso na direção do movimento);
+- Animação para todos os movimentos utilizando Blend Tree;
 
 ##
 
