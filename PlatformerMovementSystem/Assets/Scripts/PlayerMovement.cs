@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using UnityEditor.U2D.Common;
 using UnityEditor.U2D.IK;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,16 +20,17 @@ public class PlayerMovement : MonoBehaviour
     private bool isJumping = false;
     private int qtdeJump = 0;
 
-    [Header("Dash Properties")]
-    [SerializeField] private float dashSpeed;
-    [SerializeField] private float dashCoolDown;
-    [SerializeField] private int maxDashInAir;
-    private int qtdeDash = 0;
-    private float lastDashTime;
+    [Header("Dash Properties")] 
+    [SerializeField] private float dashForce = 24f;
+    [SerializeField] private float dashDuration = 0.2f;
+    [SerializeField] private float dashCoolDown = 1f;
+    private bool canDash = true;
+    private bool isDashing = false;
 
     [Header("Components")]
-    private Rigidbody2D rig;
     private Animator anim;
+    private Rigidbody2D rig;
+    private TrailRenderer tr;
 
     #region "Start And Update"
 
@@ -34,13 +38,19 @@ public class PlayerMovement : MonoBehaviour
     {
         rig = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        tr = GetComponent<TrailRenderer>();
     }
 
     private void Update()
     {
-        Move();
-        Jump();
-        Dash();
+        if(!isDashing)
+        {
+            Move();
+            Jump();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Z) && (canDash || !isJumping))
+            StartCoroutine(Dash());
     }
 
     #endregion
@@ -84,29 +94,59 @@ public class PlayerMovement : MonoBehaviour
         anim.SetFloat("Vertical", rig.velocity.y);
     }
 
-    private void Dash()
+    private IEnumerator Dash()
     {
-        if(Input.GetKeyDown(KeyCode.LeftShift) && (Time.deltaTime - lastDashTime > dashCoolDown))
-        {
-            Debug.Log("Acctual Dash");
-            if ((isJumping && qtdeDash > maxQtdeJump) || !isJumping)
-            {
-                
-                if (rig.velocity.x == 0)
-                {
-                    rig.velocity = new Vector2(dashSpeed, rig.velocity.y);
-                    qtdeDash++;
-                }
-                else
-                {
-                    float dirX = Input.GetAxisRaw("Horizontal");
-                    rig.velocity = new Vector2(dirX * dashSpeed, rig.velocity.y);
-                }
+        float direction;
+        float originalGravity = rig.gravityScale;
 
-                lastDashTime = Time.deltaTime;
-            }
-        }
+        canDash = false;
+        isDashing = true;
+        rig.gravityScale = 0;
+
+        if (rig.velocity.x > 0)
+            direction = 1;
+        else
+            direction = -1;
+
+        rig.velocity = new Vector2(direction * dashForce, rig.velocity.y);
+        tr.emitting = true;
+
+        yield return new WaitForSeconds(dashDuration);
+        tr.emitting = false;
+        rig.gravityScale = originalGravity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashCoolDown);
+        canDash = true;
     }
+
+    /*
+    private IEnumerator Dash()
+    {
+        //Vector2 newVelocity;
+        Vector2 newImpulse;
+        canDash = false;
+
+        if (rig.velocity.x != 0)
+            newImpulse = new Vector2(rig.velocity.x * dashForce, rig.velocity.y);
+        else
+            newImpulse = new Vector2(dashForce, rig.velocity.y);
+
+        rig.AddForce(newImpulse, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(dashCoolDown);
+
+        //canDash = true;
+
+        if (!isJumping)
+            canDash = true;
+        else
+        {
+            qtdeDash++;
+
+            if (qtdeDash < maxQtdeJump)
+                canDash = true;
+        }
+    }*/
 
     #endregion
 
@@ -117,8 +157,8 @@ public class PlayerMovement : MonoBehaviour
         if(collision.gameObject.CompareTag("Floor"))
         {
             qtdeJump = 0;
+            isJumping = false;
             anim.SetBool("DoubleJump", false);
-            isJumping = true;
         }
         else if(collision.gameObject.CompareTag("Walls"))
         {
